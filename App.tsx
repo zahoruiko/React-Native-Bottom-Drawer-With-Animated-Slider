@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dimensions, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import BottomDrawerWithSlider from './BottomDrawerWithSlider';
+import BottomDrawerWithSlider from './components/BottomDrawerWithSlider';
 
 const App = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);

@@ -2,7 +2,20 @@ import React, { useRef, useState } from 'react';
 import { Slider } from '@miblanchard/react-native-slider';
 import { StyleSheet, View, Text, Animated } from 'react-native';
 
-const BottomDrawerWithSlider = ({
+type TBottomDrawerWithSliderProps = {
+  sliderValue: number;
+  setSliderValue: Function;
+  width?: number;
+  minValue?: number;
+  maxValue?: number;
+  step?: number;
+  minimumTrackTintColor?: string;
+  maximumTrackTintColor?: string;
+  pointerBackgroundColor?: string;
+  pointerTextColor?: string;
+};
+
+const BottomDrawerWithSlider: React.FC<TBottomDrawerWithSliderProps> = ({
   sliderValue,
   setSliderValue,
   width = 300,
@@ -54,7 +67,10 @@ const BottomDrawerWithSlider = ({
         step={step}
         renderThumbComponent={() => {
           return isSliding ? (
-            <Animated.View onLayout={() => handlePointerRaising()} style={raisedPointerContainerStyles.wrapper}>
+            <Animated.View 
+              onLayout={() => handlePointerRaising()} 
+              style={raisedPointerContainerStyles.wrapper}
+            >
               <View style={pointerStyles.container}>
                 <Text style={pointerStyles.text}>{sliderValue}</Text>
               </View>
@@ -64,7 +80,10 @@ const BottomDrawerWithSlider = ({
               <View style={[raisedPointerContainerStyles.bottomArrow, { width: 1, height: 1 }]} />
             </Animated.View>
           ) : (
-            <Animated.View onLayout={() => handlePointerLowering()} style={loweredPointerContainerStyles.wrapper}>
+            <Animated.View 
+              onLayout={() => handlePointerLowering()} 
+              style={loweredPointerContainerStyles.wrapper}
+            >
               <View style={pointerStyles.container}>
                 <Text style={pointerStyles.text}>{sliderValue}</Text>
               </View>
@@ -78,7 +97,7 @@ const BottomDrawerWithSlider = ({
 
 export default BottomDrawerWithSlider;
 
-const getContainerStyles = width =>
+const getContainerStyles = (width: number) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -90,7 +109,7 @@ const getContainerStyles = width =>
     }
   });
 
-const getRaisedPointerContainerStyles = (pointerHeightAnimation, pointerBackgroundColor) =>
+const getRaisedPointerContainerStyles = (pointerHeightAnimation: Animated.Value, pointerBackgroundColor: string) =>
   StyleSheet.create({
     wrapper: {
       height: pointerHeightAnimation,
@@ -104,20 +123,20 @@ const getRaisedPointerContainerStyles = (pointerHeightAnimation, pointerBackgrou
     }
   });
 
-const getLoweredPointerContainerStyles = pointerHeightAnimation =>
+const getLoweredPointerContainerStyles = (pointerHeightAnimation: Animated.Value) =>
   StyleSheet.create({
     wrapper: {
       height: pointerHeightAnimation
     }
   });
 
-const getPointerStyles = (pointerBackgroundColor, pointerTextColor) =>
+const getPointerStyles = (pointerBackgroundColor: string, pointerTextColor: string) =>
   StyleSheet.create({
     container: {
       backgroundColor: pointerBackgroundColor,
+      borderRadius: 5,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 5,
       padding: 5,
     },
     text: {
